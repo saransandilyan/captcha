@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CAPTCHA Generator and Verifier</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-radius: 8px;
+      padding: 20px;
+      background-color: white;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .box {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #captcha {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    #captchaInput {
+      padding: 8px;
+      font-size: 16px;
+      margin-right: 10px;
+    }
+
+    #verifyBtn {
+      padding: 8px 16px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: rgb(130, 226, 130);
+      color: white;
+      border-radius: 5px;
+    
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="box" id="captchaBox">
+      <div id="captcha"></div>
+    </div>
+    <div class="box" id="inputBox">
+      <input type="text" id="captchaInput" placeholder="Enter CAPTCHA">
+      <button id="verifyBtn" onclick="verifyCaptcha()">Verify</button>
+    </div>
+  </div>
+
+  <script>
+    // Generate random CAPTCHA
+    function generateCaptcha() {
+      let captcha = '';
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+      for (let i = 0; i < 6; i++) {
+        captcha += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+
+      document.getElementById('captcha').textContent = captcha;
+    }
+
+    // Verify user input
+    function verifyCaptcha() {
+      const userInput = document.getElementById('captchaInput').value;
+      const captcha = document.getElementById('captcha').textContent;
+
+      if (userInput === captcha) {
+        alert('CAPTCHA verified successfully!');
+        // You can add further actions after successful verification
+      } else {
+        alert('CAPTCHA verification failed. Please try again.');
+        // You can handle failure cases here
+        generateCaptcha(); // Regenerate a new CAPTCHA on failure
+      }
+    }
+
+    // Generate initial CAPTCHA on page load
+    window.onload = generateCaptcha;
+  </script>
+</body>
+</html>
+
